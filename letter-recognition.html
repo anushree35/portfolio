@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Recognition - Ages 2-5 | ELA Learning Platform</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .activity-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .letter-card {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .letter-card:hover {
+            transform: scale(1.1);
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="activity-container">
+        <a href="../../index.html" class="back-btn">← Back to Home</a>
+        
+        <h1>🔤 Letter Recognition Game</h1>
+        <p><strong>Age Group:</strong> 2-5 years</p>
+        <p><strong>Instructions:</strong> Click on each letter to hear its sound and see a fun animation!</p>
+        
+        <div class="letter-grid">
+            <div class="letter-card" onclick="playLetter('A')">A</div>
+            <div class="letter-card" onclick="playLetter('B')">B</div>
+            <div class="letter-card" onclick="playLetter('C')">C</div>
+            <div class="letter-card" onclick="playLetter('D')">D</div>
+            <div class="letter-card" onclick="playLetter('E')">E</div>
+            <div class="letter-card" onclick="playLetter('F')">F</div>
+        </div>
+        
+        <div id="feedback" style="text-align: center; font-size: 1.5rem; margin-top: 2rem;"></div>
+    </div>
+    
+    <script>
+        function playLetter(letter) {
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = `🎉 Great job! You clicked on letter <strong>${letter}</strong>!`;
+            
+            // In a full implementation, this would play audio
+            console.log(`Playing sound for letter: ${letter}`);
+            
+            // Add some visual feedback
+            setTimeout(() => {
+                feedback.innerHTML = 'Click another letter to continue learning!';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

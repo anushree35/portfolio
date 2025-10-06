@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Comprehension - Ages 6-9 | ELA Learning Platform</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .activity-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .story-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .question-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .question-card.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .question-card.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .answer-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .answer-btn.correct {
+            background: #28a745;
+        }
+        
+        .answer-btn.incorrect {
+            background: #dc3545;
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="activity-container">
+        <a href="../../index.html" class="back-btn">← Back to Home</a>
+        
+        <h1>📚 Reading Detective</h1>
+        <p><strong>Age Group:</strong> 6-9 years</p>
+        <p><strong>Instructions:</strong> Read the story carefully, then answer the questions below!</p>
+        
+        <div class="story-section">
+            <h3>🦋 The Little Butterfly's Journey</h3>
+            <p>
+                Once upon a time, there was a small caterpillar named Charlie who lived on a beautiful green leaf. 
+                Charlie loved to eat leaves all day long and dream about flying high in the sky like the birds he watched.
+            </p>
+            <p>
+                One day, Charlie felt very sleepy and decided to wrap himself in a cozy cocoon. He slept for many days 
+                and nights. When he finally woke up, something amazing had happened - he had transformed into a beautiful 
+                orange and black butterfly!
+            </p>
+            <p>
+                Charlie was so excited that he could finally fly! He spread his colorful wings and soared high above 
+                the trees, visiting flowers and making new friends. He realized that sometimes the best things in life 
+                come after being patient and waiting for the right time.
+            </p>
+        </div>
+        
+        <div class="question-card" id="question1">
+            <h4>Question 1: What was the caterpillar's name?</h4>
+            <button class="answer-btn" onclick="checkAnswer(1, 'correct')">Charlie</button>
+            <button class="answer-btn" onclick="checkAnswer(1, 'incorrect')">Bobby</button>
+            <button class="answer-btn" onclick="checkAnswer(1, 'incorrect')">Tommy</button>
+            <div id="feedback1" style="margin-top: 1rem; font-weight: bold;"></div>
+        </div>
+        
+        <div class="question-card" id="question2">
+            <h4>Question 2: What did Charlie do before becoming a butterfly?</h4>
+            <button class="answer-btn" onclick="checkAnswer(2, 'incorrect')">He flew around flowers</button>
+            <button class="answer-btn" onclick="checkAnswer(2, 'correct')">He wrapped himself in a cocoon</button>
+            <button class="answer-btn" onclick="checkAnswer(2, 'incorrect')">He climbed trees</button>
+            <div id="feedback2" style="margin-top: 1rem; font-weight: bold;"></div>
+        </div>
+        
+        <div class="question-card" id="question3">
+            <h4>Question 3: What lesson did Charlie learn?</h4>
+            <button class="answer-btn" onclick="checkAnswer(3, 'incorrect')">Flying is easy</button>
+            <button class="answer-btn" onclick="checkAnswer(3, 'correct')">Good things come to those who wait</button>
+            <button class="answer-btn" onclick="checkAnswer(3, 'incorrect')">Leaves taste good</button>
+            <div id="feedback3" style="margin-top: 1rem; font-weight: bold;"></div>
+        </div>
+        
+        <div id="final-score" style="text-align: center; font-size: 1.5rem; margin-top: 2rem;"></div>
+    </div>
+    
+    <script>
+        let score = 0;
+        let questionsAnswered = 0;
+        
+        function checkAnswer(questionNum, result) {
+            const questionCard = document.getElementById(`question${questionNum}`);
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const buttons = questionCard.querySelectorAll('.answer-btn');
+            
+            // Disable all buttons for this question
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (result === 'correct') {
+                score++;
+                questionCard.classList.add('correct');
+                feedback.innerHTML = '✅ Correct! Great job!';
+                feedback.style.color = '#28a745';
+                
+                // Highlight correct button
+                event.target.classList.add('correct');
+            } else {
+                questionCard.classList.add('incorrect');
+                feedback.innerHTML = '❌ Not quite right. Try reading that part of the story again!';
+                feedback.style.color = '#dc3545';
+                
+                // Highlight incorrect button and show correct answer
+                event.target.classList.add('incorrect');
+                buttons.forEach(btn => {
+                    if (btn.onclick.toString().includes("'correct'")) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+            
+            questionsAnswered++;
+            
+            if (questionsAnswered === 3) {
+                showFinalScore();
+            }
+        }
+        
+        function showFinalScore() {
+            const finalScore = document.getElementById('final-score');
+            let message = '';
+            
+            if (score === 3) {
+                message = '🎉 Perfect! You got all 3 questions right! You\'re an excellent reader!';
+            } else if (score === 2) {
+                message = '👏 Great job! You got 2 out of 3 questions right! Keep practicing!';
+            } else if (score === 1) {
+                message = '👍 Good try! You got 1 out of 3 questions right! Try reading more carefully next time!';
+            } else {
+                message = '💪 Keep practicing! Reading gets easier the more you do it!';
+            }
+            
+            finalScore.innerHTML = message;
+        }
+    </script>
+</body>
+</html>

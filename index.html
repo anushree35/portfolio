@@ -3,481 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anushree Sabade - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Flight Delay Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <div class="logo-icon">A</div>
-                <a href="#home">Anushree</a>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#experience" class="nav-link">Experience</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="nav-social">
-                <a href="https://linkedin.com/in/anushreesabade" target="_blank" class="social-link">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="mailto:anushreesabade@gmail.com" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://www.instagram.com/anushreesabade/" target="_blank" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-github"></i>
-                </a>
+    <div class="container">
+        <h1>✈️ Flight Delay Predictor</h1>
+        <p>Check if your flight might be delayed due to weather!</p>
+        
+                <header class="hero">
+                    <div class="hero-content">
+                        <h1>✈️ Flight Delay Predictor</h1>
+                        <p class="hero-sub">Quick weather-based delay estimates so you can plan ahead.</p>
+                    </div>
+                    <div class="hero-visual" aria-hidden="true"> 
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 12l20-8-4 20-8-6-8-6z" fill="#2c5aa0" opacity="0.9"/>
+                        </svg>
+                    </div>
+                </header>
+            <select id="airport">
+                <option value="">Choose an airport...</option>
+                <option value="JFK">JFK - New York</option>
+                <option value="LAX">LAX - Los Angeles</option>
+                <option value="ORD">ORD - Chicago</option>
+                <option value="ATL">ATL - Atlanta</option>
+                <option value="DFW">DFW - Dallas</option>
+                <option value="DEN">DEN - Denver</option>
+                <option value="SFO">SFO - San Francisco</option>
+                <option value="SEA">SEA - Seattle</option>
+                <option value="MIA">MIA - Miami</option>
+                <option value="BOS">BOS - Boston</option>
+            </select>
+            
+            
+            <button id="checkWeather" onclick="checkFlightDelay()">Check Delay Risk</button>
+        </div>
+
+        <div class="input-section" style="margin-top:10px;">
+            <label for="apiKeyInput">OpenWeather API key (optional)</label>
+            <input id="apiKeyInput" type="password" placeholder="Paste API key here" style="width:100%; padding:8px; margin-top:6px;" />
+            <div style="margin-top:8px; display:flex; gap:8px; align-items:center; justify-content:space-between;">
+                <div style="display:flex; gap:12px; align-items:center;">
+                    <button id="manageApiBtn" class="btn-ghost" type="button">Manage API key</button>
+                    <span id="apiKeyStatus" style="margin-left:8px;color:#666; font-size:14px"></span>
+                </div>
+                <div id="apiAdvanced" class="advanced-controls" aria-hidden="true">
+                    <label style="font-weight:normal; display:flex; align-items:center; gap:6px;">
+                        <input id="saveApiKey" type="checkbox"> Save key (opt-in)
+                        <span class="tooltip-wrapper" tabindex="0" aria-label="API key save info">ℹ️
+                            <span class="tooltip-text">If checked, your API key is stored locally in your browser. Do not save on shared machines.</span>
+                        </span>
+                    </label>
+                    <button id="saveKeyBtn" type="button">Save</button>
+                    <button id="validateKeyBtn" type="button">Validate key</button>
+                    <button id="clearKeyBtn" type="button">Clear</button>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <!-- Animated Background Graphics -->
-        <div class="hero-bg-graphics">
-            <div class="floating-shape shape-1"></div>
-            <div class="floating-shape shape-2"></div>
-            <div class="floating-shape shape-3"></div>
-            <div class="floating-shape shape-4"></div>
-            <div class="floating-shape shape-5"></div>
-            <div class="floating-shape shape-6"></div>
-            <div class="floating-shape shape-7"></div>
-            <div class="floating-shape shape-8"></div>
-            <div class="floating-shape shape-9"></div>
-            <div class="floating-shape shape-10"></div>
+        <!-- Flight schedules integration -->
+        <div class="input-section" style="margin-top:6px;">
+            <label for="flightApiProvider">Flight schedules provider</label>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <select id="flightApiProvider" style="padding:8px 10px; border-radius:8px;">
+                    <option value="opensky">OpenSky (no key)</option>
+                    <option value="aviationstack">AviationStack (API key)</option>
+                </select>
+                <select id="flightScheduleType" style="padding:8px 10px; border-radius:8px;">
+                    <option value="arrival">Arrivals</option>
+                    <option value="departure">Departures</option>
+                </select>
+                <button id="showSchedulesBtn" type="button">Show Schedules</button>
+            </div>
+
+            <label for="flightApiKeyInput" style="margin-top:10px; display:block;">Flight API key (optional)</label>
+            <input id="flightApiKeyInput" type="password" placeholder="Paste flight API key (for AviationStack)" style="width:100%; padding:8px; margin-top:6px;" />
+            <div style="margin-top:8px; display:flex; gap:8px; align-items:center; justify-content:space-between;">
+                <div style="display:flex; gap:12px; align-items:center;">
+                    <button id="manageFlightBtn" class="btn-ghost" type="button">Manage flight key</button>
+                    <span id="flightApiKeyStatus" style="margin-left:8px;color:#666; font-size:14px"></span>
+                </div>
+                <div id="flightAdvanced" class="advanced-controls" aria-hidden="true">
+                    <label style="font-weight:normal; display:flex; align-items:center; gap:6px;">
+                        <input id="saveFlightApiKey" type="checkbox"> Save flight key (opt-in)
+                        <span class="tooltip-wrapper" tabindex="0" aria-label="flight api key save info">ℹ️
+                            <span class="tooltip-text">If checked, your flight API key is stored locally in your browser. Do not save on shared machines.</span>
+                        </span>
+                    </label>
+                    <button id="saveFlightKeyBtn" type="button">Save</button>
+                    <button id="validateFlightKeyBtn" type="button">Validate key</button>
+                    <button id="clearFlightKeyBtn" type="button">Clear</button>
+                </div>
+            </div>
+        </div>
+        <div class="note" style="margin-top:8px; font-size:14px;">
+            <strong>Note:</strong> The app includes a built-in API key so you can try the app immediately. If you prefer, paste your own OpenWeather API key above, click <em>Validate key</em>, and optionally check <em>Save key (opt-in)</em> to keep it in this browser only. Do not save keys on shared/public computers.
         </div>
         
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">Hi, I'm <span class="highlight">Anushree Sabade</span></h1>
-                <p class="hero-subtitle">Computer Science @ University of Connecticut</p>
-            </div>
-            <div class="hero-image">
-                <div class="hero-photo">
-                    <img src="Front.jpeg" alt="Anushree Sabade" class="hero-profile-photo">
-                </div>
-            </div>
+        <div id="loading" class="loading" style="display: none;">
+            <p>Checking weather conditions...</p>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        Hey, I'm <strong>Anushree Sabade</strong>, a Computer Science student at the <strong>University of Connecticut</strong>. 
-                        I love building innovative applications, solving complex problems, and leveraging technology to create meaningful impact.
-                    </p>
-                    <p>
-                        My experience spans <strong>full-stack development, AI, and data analysis</strong>. From developing AI-powered 
-                        applications to crafting dynamic web solutions, I'm always pushing the boundaries of what's possible 
-                        with <strong>Python, JavaScript, Java, HTML/CSS</strong>, and many more languages and frameworks.
-                    </p>
-                    <p>
-                        My tech journey began with <strong>Girls Who Code</strong>, where I spent two transformative summers learning 
-                        programming fundamentals and building my first projects. I've since expanded my skills through teaching 
-                        coding to K-12 students and developing meaningful projects that solve real-world problems.
-                    </p>
-                    <p>
-                        I'm particularly fascinated by <strong>artificial intelligence and cognitive science</strong>, exploring how 
-                        technology can enhance human understanding and learning. As a <strong>Girl Scout</strong> and active community 
-                        volunteer, I'm committed to using my technical skills to serve others and make a meaningful impact.
-                    </p>
-                </div>
-                <div class="about-right">
-                    <div class="about-photo">
-                        <img src="grad.jpg" alt="Anushree Sabade Graduation" class="profile-photo">
+        
+        <div id="results" class="results" style="display: none;">
+            <h2>Weather Report</h2>
+            <div id="weatherInfo"></div>
+            
+                    <div id="riskMeter" class="risk-meter" aria-hidden="true">
+                        <svg id="riskGauge" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Delay risk gauge">
+                            <defs>
+                                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#34d399" />
+                                    <stop offset="50%" stop-color="#f59e0b" />
+                                    <stop offset="100%" stop-color="#ef4444" />
+                                </linearGradient>
+                            </defs>
+                            <!-- background track -->
+                            <circle cx="60" cy="60" r="44" class="gauge-track" stroke-width="12" fill="none" />
+                            <!-- animated progress -->
+                            <circle id="gaugeProgress" cx="60" cy="60" r="44" class="gauge-progress" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 60 60)" />
+                            <text id="gaugeLabel" x="60" y="66" text-anchor="middle" class="gauge-label">0%</text>
+                        </svg>
                     </div>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h3>2+</h3>
-                            <p>Years of Experience</p>
-                        </div>
-                        <div class="stat">
-                            <h3>4+</h3>
-                            <p>Programming Languages</p>
-                        </div>
-                        <div class="stat">
-                            <h3>100+</h3>
-                            <p>Students Mentored</p>
-                        </div>
-                        <div class="stat">
-                            <h3>400+</h3>
-                            <p>Volunteer Hours</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div id="lastUpdated" class="last-updated" aria-live="polite"></div>
+            <div id="delayPrediction"></div>
         </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Tutor</h3>
-                        <h4>Mathnasium</h4>
-                        <span class="timeline-date">Jul 2024 - Present</span>
-                        <p>Provided individualized math tutoring to improve understanding and build confidence in students using specific curriculum and positive reinforcement strategies.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Lab Mentor</h3>
-                        <h4>iCode School</h4>
-                        <span class="timeline-date">Mar 2024 - Jun 2024</span>
-                        <p>Taught K-12 students coding concepts, programming languages (Python, Java, HTML/CSS, JS), and software tools, logging 20+ hours weekly.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Senior Ambassador</h3>
-                        <h4>Girl Scouts of America</h4>
-                        <span class="timeline-date">Mar 2024 - Jun 2024</span>
-                        <p>Earned Silver Award and led camps and badge workshops. Mentored younger scouts and organized community service projects focused on education and environmental awareness.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>President</h3>
-                        <h4>South Windsor High School Photography Club</h4>
-                        <span class="timeline-date">Sep 2023 - Jun 2025</span>
-                        <p>Founded and expanded the club to 30+ members; organized photography workshops and school event shoots. Led team projects and managed club budget and equipment.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Intern</h3>
-                        <h4>Harvard STRIPED Youth Corp</h4>
-                        <span class="timeline-date">Aug 2024 - Aug 2024</span>
-                        <p>Researched eating disorders and policy change; advocated for school program improvements and youth protections for Connecticut.</p>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="info-section">
+            <h3>How it works:</h3>
+            <ul>
+                <li>Gets current weather data for the airport</li>
+                <li>Checks for bad weather conditions</li>
+                <li>Predicts delay probability based on weather</li>
+                <li>Simple rules: rain/snow/wind = higher delay chance</li>
+            </ul>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-plane-departure"></i>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3>Flight Delay Detector</h3>
-                            <div class="project-links">
-                                <a href="file:///Users/anushreesabade/Downloads/flight_delay_tracker-main/index.html" class="project-link" target="_blank">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p>A comprehensive web application that helps travelers predict and track flight delays using real-time data and machine learning algorithms.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">APIs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3>ELA Learning Platform</h3>
-                            <div class="project-links">
-                                <a href="file:///Users/anushreesabade/ela-learning-platform/index.html" class="project-link" target="_blank">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p>An educational website and YouTube channel designed to enhance children's English Language Arts skills for ages 2-14, featuring interactive activities and engaging content.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">YouTube API</span>
-                            <span class="tech-tag">Educational Content</span>
-                        </div>
-                    </div>
-                </div>
+    </div>
+    <!-- Onboarding / quick-start modal -->
+    <div id="onboardModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h2>Quick start</h2>
+            <p>To try the app quickly you can either use the built-in convenience keys or paste your own keys. Keys saved here are stored only in your browser.</p>
+            <div style="margin-top:12px;">
+                <label>OpenWeather key (optional)</label>
+                <input id="onboardOwKey" type="password" placeholder="Paste OpenWeather key" />
             </div>
-        </div>
-    </section>
-
-
-    <!-- Technical Skills Section -->
-    <section id="tech-skills" class="tech-skills">
-        <div class="container">
-            <h2 class="section-title">Languages</h2>
-            <div class="skills-grid">
-                <div class="skill-card java">
-                    <div class="skill-icon">
-                        <i class="fab fa-java"></i>
-                    </div>
-                    <div class="skill-name">Java</div>
-                </div>
-                
-                <div class="skill-card python">
-                    <div class="skill-icon">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <div class="skill-name">Python</div>
-                </div>
-                
-                <div class="skill-card javascript">
-                    <div class="skill-icon">
-                        <i class="fab fa-js-square"></i>
-                    </div>
-                    <div class="skill-name">JavaScript</div>
-                </div>
-                
-                <div class="skill-card typescript">
-                    <div class="skill-icon">
-                        <i class="fab fa-js-square"></i>
-                    </div>
-                    <div class="skill-name">TypeScript</div>
-                </div>
-                
-                <div class="skill-card sql">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">SQL</div>
-                </div>
-                
-                <div class="skill-card html">
-                    <div class="skill-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <div class="skill-name">HTML</div>
-                </div>
-                
-                <div class="skill-card css">
-                    <div class="skill-icon">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <div class="skill-name">CSS</div>
-                </div>
+            <div style="margin-top:8px;">
+                <label>Flight API key (optional)</label>
+                <input id="onboardFlightKey" type="password" placeholder="Paste AviationStack key" />
             </div>
-        </div>
-    </section>
-
-    <!-- Personal Interests Section -->
-    <section id="interests" class="interests">
-        <div class="container">
-            <h2 class="section-title">Personal Interests</h2>
-            <div class="interests-grid">
-                <div class="interest-card music">
-                    <div class="interest-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <div class="interest-name">Music</div>
-                </div>
-                
-                <div class="interest-card photography">
-                    <div class="interest-icon">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                    <div class="interest-name">Photography</div>
-                </div>
-                
-                <div class="interest-card dance">
-                    <div class="interest-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="interest-name">Dance</div>
-                </div>
-                
-                <div class="interest-card fitness">
-                    <div class="interest-icon">
-                        <i class="fas fa-dumbbell"></i>
-                    </div>
-                    <div class="interest-name">Gym & Fitness</div>
-                </div>
-                
-                <div class="interest-card hiking">
-                    <div class="interest-icon">
-                        <i class="fas fa-mountain"></i>
-                    </div>
-                    <div class="interest-name">Hiking</div>
-                </div>
-                
-                <div class="interest-card coding">
-                    <div class="interest-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="interest-name">Coding</div>
-                </div>
-                
-                <div class="interest-card reading">
-                    <div class="interest-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="interest-name">Reading</div>
-                </div>
-                
-                <div class="interest-card community">
-                    <div class="interest-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="interest-name">Community Service</div>
-                </div>
-                
-                <div class="interest-card golf">
-                    <div class="interest-icon">
-                        <i class="fas fa-golf-ball"></i>
-                    </div>
-                    <div class="interest-name">Golf</div>
-                </div>
-                
-                <div class="interest-card travel">
-                    <div class="interest-icon">
-                        <i class="fas fa-plane"></i>
-                    </div>
-                    <div class="interest-name">Traveling</div>
-                </div>
+            <div style="display:flex; gap:8px; margin-top:12px; justify-content:flex-end;">
+                <button id="useBuiltInBtn" type="button">Use built-in keys</button>
+                <button id="applyOnboardBtn" type="button">Apply</button>
             </div>
+            <div style="margin-top:10px; font-size:13px; color:var(--muted);">Tip: you can also pass keys in the URL as <code>?ow_key=...&flight_key=...</code></div>
         </div>
-    </section>
-
-
-    <!-- Awards Section -->
-    <section id="awards" class="awards">
-        <div class="container">
-            <h2 class="section-title">Honors & Awards</h2>
-            <div class="awards-grid">
-                <div class="award-card">
-                    <div class="award-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>NCWIT Aspirations in Computing CT State Award</h3>
-                    <p>2024 & 2025 - Recognized for achievements and aspirations in computing and STEM</p>
-                </div>
-                <div class="award-card">
-                    <div class="award-icon">
-                        <i class="fas fa-medal"></i>
-                    </div>
-                    <h3>PEO STAR National Scholarship Recipient</h3>
-                    <p>2025 - National merit award for academic excellence and leadership as a senior high school woman</p>
-                </div>
-                <div class="award-card">
-                    <div class="award-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>Bronze Presidential Volunteer Service Award</h3>
-                    <p>2024 - Earned for completing 165+ hours of community service in one year</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Connect!</h3>
-                    <p>I'm always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat about technology, feel free to reach out!</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:anushreesabade@gmail.com">anushreesabade@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:860-938-8001">860-938-8001</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-linkedin"></i>
-                            <a href="https://linkedin.com/in/anushreesabade" target="_blank">linkedin.com/in/anushreesabade</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-instagram"></i>
-                            <a href="https://www.instagram.com/anushreesabade/" target="_blank">@anushreesabade</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 Anushree Sabade. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/anushreesabade" target="_blank">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:anushreesabade@gmail.com">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://www.instagram.com/anushreesabade/" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    </div>
+    
     <script src="script.js"></script>
+    <footer class="site-footer">
+        Made by Anushree Sabade (2025)
+    </footer>
 </body>
 </html>

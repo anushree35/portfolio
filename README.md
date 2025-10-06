@@ -1,114 +1,110 @@
-# My Portfolio Website
+# Flight Delay Predictor
 
-Hey! This is my personal portfolio website that I built to showcase my work and experience as a Computer Science student at UConn.
+A simple website that predicts flight delays based on weather conditions at major airports.
 
-## What's in here
+## How it works
 
-- **Dark theme design** - I went with a dark theme because it looks more modern and is easier on the eyes
-- **Responsive layout** - Works on all devices (desktop, tablet, mobile)
-- **Cool animations** - Added some floating shapes and hover effects to make it more interactive
-- **Contact form** - People can reach out to me directly through the site
-- **Project showcase** - Features my flight delay detector and ELA learning platform projects
+This project uses weather data from OpenWeatherMap API to predict if flights might be delayed due to bad weather conditions.
 
-## Files in this project
+## Files
 
-```
-portfolio-website/
-├── index.html          # Main page
-├── styles.css          # All the styling and animations
-├── script.js           # JavaScript for interactive stuff
-└── README.md           # This file
-```
+- `index.html` - Main webpage
+- `style.css` - Styling for the website
+- `script.js` - JavaScript code for getting weather data and making predictions
+- `weather_processor.py` - Python script for processing weather data (optional)
 
-## Tech stack I used
+## Setup
 
-- **HTML5** - Basic structure
-- **CSS3** - Styling, animations, and responsive design
-- **JavaScript** - Interactive features and smooth scrolling
-- **Font Awesome** - Icons
-- **Google Fonts** - Inter font (looks clean and modern)
+1. Get a free API key from OpenWeatherMap:
+   - Go to https://openweathermap.org/api
+   - Sign up for a free account
+   - Get your API key
 
-## What's on the website
+2. Replace `YOUR_API_KEY_HERE` in `script.js` with your actual API key
 
-The site has several sections:
-1. **Home** - Introduction with my photo and basic info
-2. **About Me** - My background, interests, and some stats
-3. **Experience** - Timeline of my work and volunteer experience
-4. **Projects** - My coding projects (flight delay detector, ELA platform)
-5. **Skills** - Programming languages and tools I know
-6. **Interests** - Personal hobbies and activities
-7. **Contact** - Ways to reach me
+3. Open `index.html` in your web browser
 
-## Cool features I added
+## Features
 
-- Smooth scrolling between sections
-- Hover effects on everything (cards, buttons, text)
-- Mobile-friendly navigation
-- Contact form with validation
-- Floating background animations
-- Text that moves when you hover over it
+- Select from 10 major US airports
+- Get current weather conditions
+- Simple delay risk calculation based on:
+  - Temperature (freezing conditions)
+  - Wind speed
+  - Precipitation (rain, snow)
+  - Storms and poor visibility
+- Color-coded risk levels (low, medium, high)
 
-## How to run it locally
+## How the prediction works
 
-Just open `index.html` in your browser, or if you want to run it on a local server:
+The delay prediction uses simple rules:
+- Freezing temperature: +30 risk points
+- High winds (>15 mph): +25 risk points  
+- Rain: +20 risk points
+- Snow: +40 risk points
+## Flight Delay Predictor
+
+A small static web app that fetches current weather and shows a simple, explainable risk score for flight delays. It also supports fetching recent flight schedules (OpenSky / AviationStack) and has an in-page API key UI with opt-in local saving.
+
+This repo is a static site (HTML/CSS/JavaScript). No build step required.
+
+### Quick run (local)
+
+1. From the project root, start a simple HTTP server (Python 3):
 
 ```bash
-# Using Python (what I usually do)
-python -m http.server 8000
-
-# Or with Node.js
-npx serve .
+python3 -m http.server 5500
 ```
 
-Then go to `http://localhost:8000` in your browser.
+2. Open http://localhost:5500/ in your browser.
 
-## How to customize it
+3. Use the page controls to select an airport and "Check Delay Risk". You can optionally paste your own OpenWeather API key or a flight API key (AviationStack) in the UI.
 
-If you want to use this as a template:
-1. Edit `index.html` to change the content
-2. Modify `styles.css` to change colors and styling
-3. Update `script.js` if you want to add more interactive features
-4. Replace the project links with your own
+### Files of interest
 
-## Deploying the site
+- `index.html` – main UI
+- `style.css` – styles
+- `script.js` – app logic, weather + schedules fetching, UI wiring
 
-I deployed mine on Netlify (it's free and super easy):
+### API keys & safety
 
-1. Push your code to GitHub
-2. Connect your GitHub to Netlify
-3. Deploy from your repository
-4. Done! Your site will be live at `https://your-site-name.netlify.app`
+- The site ships with a convenience OpenWeather key to let people try the demo. For real usage, paste your own keys using the inputs on the page.
+- Saving keys in the browser is opt-in and stored only in `localStorage`. Do not save keys on shared/public computers.
+- For production / public deployment, prefer a server-side proxy (Netlify Functions, Cloudflare Worker, Vercel serverless) to keep keys secret.
 
-You can also use:
-- **GitHub Pages** - Free hosting directly from GitHub
-- **Vercel** - Another great free option
+### Git & deployment
 
-## Mobile-friendly
+Recommended steps to save and publish the project:
 
-The site works great on phones and tablets too - I made sure everything scales properly and the navigation works well on smaller screens.
+```bash
+# initialize git
+cd /path/to/flight_delay_tracker-main
+git init
+git add .
+git commit -m "Initial commit: Flight Delay Predictor"
 
-## Contact me
+# create a remote repo on GitHub (manually or via gh cli), then push
+# example using GitHub CLI:
+# gh repo create your-username/flight_delay_predictor --public --source=. --remote=origin
+# git push -u origin main
+```
 
-- **Email**: anushreesabade@gmail.com
-- **Phone**: 860-938-8001
-- **LinkedIn**: [linkedin.com/in/anushreesabade](https://linkedin.com/in/anushreesabade)
-- **Instagram**: [@anushreesabade](https://www.instagram.com/anushreesabade/)
+Deployment options (pick one):
+- GitHub Pages: good for static sites; requires a `gh-pages` branch or using repo settings. Works well if your site does not rely on server-side keys.
+- Vercel: great for static + serverless functions. Connect your GitHub repo and deploy; add serverless functions if you need to proxy API keys.
+- Netlify: similar to Vercel; supports functions for key secrecy and identity.
 
-## Colors I used
+### Troubleshooting
 
-- **Blue**: #3b82f6 (main blue)
-- **Purple**: #8b5cf6 (gradient purple)
-- **Pink**: #ec4899 (accent pink)
-- **Background**: Dark grays and blacks
+- CORS / mixed-content: If you deploy the site over HTTPS and an API endpoint is HTTP-only (e.g., some AviationStack endpoints), the browser will block the request. Use HTTPS endpoints or a serverless proxy if you see mixed-content errors.
+- OpenSky: Some OpenSky endpoints require ICAO codes (e.g., KJFK). If you see 404 errors, try AviationStack or add ICAO codes to the airport map.
 
-## Future ideas
+### Next steps (suggested)
 
-Maybe I'll add:
-- A blog section
-- More interactive animations
-- Light/dark mode toggle
-- More project filtering options
+- Add a small serverless proxy to keep flight API keys secret.
+- Add more airports (ICAO mapping) and richer schedule UI.
+- Add a GitHub Actions workflow that runs a quick HTML/CSS/JS linter or smoke test.
 
 ---
 
-**Made by Anushree Sabade** ✨
+Made by Anushree Sabade (2025)

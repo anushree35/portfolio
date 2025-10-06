@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essay Writing Workshop - Ages 10-14 | ELA Learning Platform</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .activity-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .writing-prompt {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .essay-structure {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .structure-guide {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .writing-area {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .essay-textarea {
+            width: 100%;
+            min-height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        
+        .word-count {
+            text-align: right;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .tips-section {
+            background: #e8f5e8;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .essay-structure {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="activity-container">
+        <a href="../../index.html" class="back-btn">← Back to Home</a>
+        
+        <h1>✍️ Essay Writing Workshop</h1>
+        <p><strong>Age Group:</strong> 10-14 years</p>
+        <p><strong>Objective:</strong> Learn to structure and write persuasive essays with clear arguments and supporting evidence.</p>
+        
+        <div class="writing-prompt">
+            <h3>📝 Today's Writing Prompt</h3>
+            <p><strong>"Should students be allowed to use smartphones in school?"</strong></p>
+            <p>Write a persuasive essay arguing for or against allowing smartphones in school. Use specific examples and reasons to support your position. Your essay should be 300-500 words.</p>
+        </div>
+        
+        <div class="essay-structure">
+            <div class="structure-guide">
+                <h4>📋 Essay Structure Guide</h4>
+                <div style="margin: 1rem 0;">
+                    <h5>1. Introduction (1 paragraph)</h5>
+                    <ul>
+                        <li>Hook to grab attention</li>
+                        <li>Background information</li>
+                        <li>Clear thesis statement</li>
+                    </ul>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <h5>2. Body Paragraphs (2-3 paragraphs)</h5>
+                    <ul>
+                        <li>Topic sentence</li>
+                        <li>Supporting evidence</li>
+                        <li>Examples and explanations</li>
+                        <li>Transition to next point</li>
+                    </ul>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <h5>3. Conclusion (1 paragraph)</h5>
+                    <ul>
+                        <li>Restate thesis</li>
+                        <li>Summarize main points</li>
+                        <li>Call to action or final thought</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="writing-area">
+                <h4>✏️ Write Your Essay Here</h4>
+                <textarea 
+                    id="essayText" 
+                    class="essay-textarea" 
+                    placeholder="Start writing your essay here... Remember to follow the structure guide on the left!"
+                    oninput="updateWordCount()"
+                ></textarea>
+                <div class="word-count" id="wordCount">Word count: 0</div>
+            </div>
+        </div>
+        
+        <div class="tips-section">
+            <h4>💡 Writing Tips</h4>
+            <ul>
+                <li><strong>Be Clear:</strong> Use simple, direct language that clearly expresses your ideas</li>
+                <li><strong>Use Evidence:</strong> Support your arguments with facts, examples, or expert opinions</li>
+                <li><strong>Stay Focused:</strong> Each paragraph should focus on one main idea</li>
+                <li><strong>Vary Sentences:</strong> Mix short and long sentences to keep your writing interesting</li>
+                <li><strong>Proofread:</strong> Always check for spelling, grammar, and punctuation errors</li>
+            </ul>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="saveEssay()">💾 Save Draft</button>
+            <button class="btn btn-secondary" onclick="clearEssay()">🗑️ Clear Text</button>
+            <button class="btn btn-success" onclick="submitEssay()">📤 Submit Essay</button>
+            <button class="btn btn-primary" onclick="getWritingTip()">💡 Get Writing Tip</button>
+        </div>
+        
+        <div id="feedback" style="margin-top: 2rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+    </div>
+    
+    <script>
+        function updateWordCount() {
+            const text = document.getElementById('essayText').value;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            
+            document.getElementById('wordCount').textContent = `Word count: ${wordCount}`;
+            
+            // Color code based on target length (300-500 words)
+            const wordCountElement = document.getElementById('wordCount');
+            if (wordCount < 300) {
+                wordCountElement.style.color = '#dc3545'; // Red
+            } else if (wordCount <= 500) {
+                wordCountElement.style.color = '#28a745'; // Green
+            } else {
+                wordCountElement.style.color = '#ffc107'; // Yellow
+            }
+        }
+        
+        function saveEssay() {
+            const text = document.getElementById('essayText').value;
+            if (text.trim()) {
+                localStorage.setItem('savedEssay', text);
+                showFeedback('✅ Essay saved successfully!', 'success');
+            } else {
+                showFeedback('⚠️ Please write something before saving.', 'warning');
+            }
+        }
+        
+        function clearEssay() {
+            if (confirm('Are you sure you want to clear all text? This action cannot be undone.')) {
+                document.getElementById('essayText').value = '';
+                updateWordCount();
+                showFeedback('🗑️ Text cleared.', 'info');
+            }
+        }
+        
+        function submitEssay() {
+            const text = document.getElementById('essayText').value;
+            const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            
+            if (wordCount < 100) {
+                showFeedback('📝 Your essay seems quite short. Try to develop your ideas more fully before submitting.', 'warning');
+                return;
+            }
+            
+            showFeedback('🎉 Essay submitted successfully! In a real classroom setting, this would be sent to your teacher for review. Great work on completing this writing exercise!', 'success');
+        }
+        
+        function getWritingTip() {
+            const tips = [
+                "Start with a strong hook - ask a question, share a surprising fact, or tell a brief story.",
+                "Use transition words like 'furthermore,' 'however,' and 'in conclusion' to connect your ideas.",
+                "Read your essay aloud to catch awkward sentences and improve flow.",
+                "Make sure each body paragraph starts with a clear topic sentence.",
+                "Use specific examples rather than general statements to make your argument stronger.",
+                "Vary your sentence structure - don't start every sentence the same way.",
+                "End with a memorable conclusion that reinforces your main argument."
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            showFeedback(`💡 Writing Tip: ${randomTip}`, 'info');
+        }
+        
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.style.display = 'block';
+            feedback.textContent = message;
+            
+            // Style based on type
+            feedback.className = '';
+            if (type === 'success') {
+                feedback.style.background = '#d4edda';
+                feedback.style.color = '#155724';
+                feedback.style.border = '1px solid #c3e6cb';
+            } else if (type === 'warning') {
+                feedback.style.background = '#fff3cd';
+                feedback.style.color = '#856404';
+                feedback.style.border = '1px solid #ffeaa7';
+            } else if (type === 'info') {
+                feedback.style.background = '#d1ecf1';
+                feedback.style.color = '#0c5460';
+                feedback.style.border = '1px solid #bee5eb';
+            }
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Load saved essay on page load
+        window.addEventListener('load', function() {
+            const savedEssay = localStorage.getItem('savedEssay');
+            if (savedEssay) {
+                document.getElementById('essayText').value = savedEssay;
+                updateWordCount();
+            }
+        });
+    </script>
+</body>
+</html>

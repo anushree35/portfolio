@@ -1,0 +1,51 @@
+FLIGHT DELAY TRACKER - DOWNLOAD INSTRUCTIONS
+
+To get this project on your computer:
+
+METHOD 1 - Copy and paste each file:
+1. Create a new folder on your computer called "flight-delay-tracker"
+2. Create these files and copy the content:
+
+FILE 1: index.html
+- Create a new file called "index.html"
+- Copy all the HTML code from the file I created
+- Save it
+
+FILE 2: style.css  
+- Create a new file called "style.css"
+- Copy all the CSS code from the file I created
+- Save it
+
+FILE 3: script.js
+- Create a new file called "script.js" 
+- Copy all the JavaScript code from the file I created
+- Save it
+
+FILE 4: weather_processor.py (optional)
+- Create a new file called "weather_processor.py"
+- Copy all the Python code from the file I created
+- Save it
+
+FILE 5: README.md
+- Create a new file called "README.md"
+- Copy the documentation from the file I created
+- Save it
+
+METHOD 2 - Use the terminal/command prompt:
+If you're in the same directory as these files, you can copy them:
+- On Mac/Linux: cp -r flight-delay-tracker ~/Desktop/
+- On Windows: xcopy flight-delay-tracker C:\Users\YourName\Desktop\ /E
+
+NEXT STEPS:
+1. Get a free API key from OpenWeatherMap.org
+2. Replace "YOUR_API_KEY_HERE" in script.js with your real API key
+3. Open index.html in your web browser
+4. Test it by selecting an airport and clicking "Check Delay Risk"
+
+FOLDER STRUCTURE SHOULD LOOK LIKE:
+flight-delay-tracker/
+├── index.html
+├── style.css  
+├── script.js
+├── weather_processor.py
+└── README.md
